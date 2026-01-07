@@ -5,7 +5,7 @@ using WebShopApp.Models.Category;
 
 namespace WebShopApp.Models.Product
 {
-    public class ProductCreateVM
+    public class ProductEditVM
     {
         [Key]
         public int Id { get; set; }
@@ -38,5 +38,4 @@ namespace WebShopApp.Models.Product
         [Display(Name = "Discount")]
         public decimal Discount { get; set; }
     }
-
 }

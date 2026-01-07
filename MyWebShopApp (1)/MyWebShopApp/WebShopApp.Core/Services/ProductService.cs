@@ -21,12 +21,11 @@ namespace WebShopApp.Core.Services
 
         public bool Create(string name, int brandId, int categoryId, string picture, int quantity, decimal price, decimal discount)
         {
-            Product item = new Product()
+            Product item = new Product
             {
                 ProductName = name,
                 Brand = _context.Brands.Find(brandId),
                 Category = _context.Categories.Find(categoryId),
-
                 Picture = picture,
                 Quantity = quantity,
                 Price = price,
@@ -53,47 +52,46 @@ namespace WebShopApp.Core.Services
             List<Product> products = _context.Products.ToList();
             if (!String.IsNullOrEmpty(searchStringCategoryName) && !String.IsNullOrEmpty(searchStringBrandName))
             {
-                products = products.Where(x => x.Category.CategoryName.ToLower().Contains
-                    (searchStringCategoryName.ToLower())
-                    && x.Brand.BrandName.ToLower().Contains(searchStringBrandName.ToLower())).ToList();
+                products = products.Where(x => x.Category.CategoryName.ToLower().Contains(searchStringCategoryName.ToLower())
+                && x.Brand.BrandName.ToLower().Contains(searchStringBrandName.ToLower())).ToList();
             }
             else if (!String.IsNullOrEmpty(searchStringCategoryName))
             {
-                products = products.Where(x => x.Category.CategoryName.ToLower().Contains
-                    (searchStringCategoryName.ToLower())).ToList();
+                products = products.Where(x => x.Category.CategoryName.ToLower().Contains(searchStringCategoryName.ToLower())).ToList();
             }
             else if (!String.IsNullOrEmpty(searchStringBrandName))
             {
-                products = products.Where(x => x.Brand.BrandName.ToLower().Contains(searchStringBrandName.ToLower()
-                    )).ToList();
+                products = products.Where(x => x.Brand.BrandName.ToLower().Contains(searchStringBrandName.ToLower())).ToList();
             }
             return products;
         }
 
-
         public bool RemoveById(int productId)
         {
-           var product = GetProductById(productId);
-            if (product == default(Product)) 
-            { 
+            var product = GetProductById(productId);
+            if (product == default(Product))
+            {
                 return false;
             }
+
             _context.Remove(product);
-            return _context.SaveChanges() !=0;
+            return _context.SaveChanges() != 0;
         }
 
         public bool Update(int productId, string name, int brandId, int categoryId, string picture, int quantity, decimal price, decimal discount)
         {
-           var product = GetProductById(productId);
+            var product = GetProductById(productId);
             if (product == default(Product))
             {
                 return false;
             }
             product.ProductName = name;
 
+            //product.BrandId = brandId;
+            //product.CategoryId = categoryId;
+
             product.Brand = _context.Brands.Find(brandId);
             product.Category = _context.Categories.Find(categoryId);
-
             product.Picture = picture;
             product.Quantity = quantity;
             product.Price = price;
@@ -102,4 +100,5 @@ namespace WebShopApp.Core.Services
             return _context.SaveChanges() != 0;
         }
     }
+
 }
